@@ -1,10 +1,30 @@
-const boardE1 = document.getElementById('board¡¦);
-const cells = Array.from(document.querySelectorAll('.cell¡¦));
-const btnReset = document.getElementById('reset¡¦);
-const turnEl = document.getElementById('turn¡¦);
-const stateEl = document.getElementById('state¡¦);
+const boardE1 = document.getElementById('boardâ€™);
+const cells = Array.from(document.querySelectorAll('.cellâ€™));
+const btnReset = document.getElementById('resetâ€™);
+const turnEl = document.getElementById('turnâ€™);
+const stateEl = document.getElementById('stateâ€™);
+const scoreXEl = document.getElementById('score-xâ€™);
+const scoreOEl = document.getElementById('score-oâ€™);
+const scoreDrawEl = document.getElementById('score-draw');
+
+const WIN_LINES = [
+[0,1,2],[3,4,5],[6,7,8], 
+[0,3,6],[1,4,7],[2,5,8], 
+[0,4,8],[2,4,6] 
+];
+let board; 
+let current; 
+let active; 
+let scoreX = 0;
+let scoreO = 0;
+let scoreDraw = 0;
 
 let board, current, active;
+/**
+* éŠæˆ²çµæŸï¼Œè™•ç†å‹åˆ©æˆ–å¹³æ‰‹
+* @param {object} param0 - {winner, line}
+*/
+
 
 const WIN_LINES = [
 	[0,1,2],[3,4,5],[6,7,8], 
@@ -12,17 +32,44 @@ const WIN_LINES = [
 	[0,4,8],[2,4,6] 
 ];
 
+function endGame({winner, line}){
+active = false;
+if(winner){
+stateEl.textContent = `${winner} å‹åˆ©ï¼`;
+line.forEach(i=> cells[i].classList.add(â€˜winâ€™));
+if(winner===â€˜Xâ€™) scoreX++; else scoreO++;
+}else{
+stateEl.textContent = â€˜å¹³æ‰‹â€™;
+scoreDraw++;
+}
+updateScoreboard();
+cells.forEach(c=> c.disabled = true);
+}
+
+function updateScoreboard(){
+scoreXEl.textContent = scoreX;
+scoreOEl.textContent = scoreO;
+scoreDrawEl.textContent = scoreDraw;
+}
+btnReset.addEventListener('click', init);
+
+btnResetAll.addEventListener(â€˜clickâ€™, ()=>{
+scoreX = scoreO = scoreDraw = 0;
+updateScoreboard();
+init();
+});
+
 function init(){
-	board = Array(9).fill(¡¥¡¦);
-	current = ¡¥X¡¦;
+	board = Array(9).fill(â€˜â€™);
+	current = â€˜Xâ€™;
 	active = true;
 	cells.forEach(c=>{
-		c.textContent = ¡¥¡¦;
-		c.className = ¡¥cell¡¦;
+		c.textContent = â€˜â€™;
+		c.className = â€˜cellâ€™;
 		c.disabled = false;
 	});
 	turnEl.textContent = current;
-	stateEl.textContent = ¡¥¡¦;
+	stateEl.textContent = â€˜â€™;
 }
 
 function place(idx){
@@ -40,7 +87,7 @@ function place(idx){
 }
 
 function switchTurn(){
-	current = current===¡¥X¡¦ ? ¡¥O¡¦ : ¡¥X¡¦;
+	current = current===â€˜Xâ€™ ? â€˜Oâ€™ : â€˜Xâ€™;
 	turnEl.textContent = current;
 }
 
@@ -58,22 +105,23 @@ function evaluate(){
 function endGame({winner, line}){
 	active = false;
 	if(winner){
-		stateEl.textContent = `${winner} ³Ó§Q¡I`;
-		line.forEach(i=> cells[i].classList.add(¡¥win¡¦));
+		stateEl.textContent = `${winner} å‹åˆ©ï¼`;
+		line.forEach(i=> cells[i].classList.add(â€˜winâ€™));
 	}else{
-		stateEl.textContent = ¡¥¥­¤â¡¦;
+		stateEl.textContent = â€˜å¹³æ‰‹â€™;
 	}
 	cells.forEach(c=> c.disabled = true);
 }
 
 cells.forEach(cell=>{
 	cell.addEventListener('click', ()=>{
-		const idx = +cell.getAttribute('data-idx¡¦);
+		const idx = +cell.getAttribute('data-idxâ€™);
 		place(idx);
 	});
 });
 btnReset.addEventListener('click', init);
 init();
+
 
 
 
