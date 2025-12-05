@@ -94,16 +94,6 @@ function evaluate(){
 		return { finished:false };
 }
 
-function endGame({winner, line}){
-	active = false;
-	if(winner){
-		stateEl.textContent = `${winner} 勝利！`;
-		line.forEach(i=> cells[i].classList.add('win'));
-	}else{
-		stateEl.textContent = '平手';
-	}
-	cells.forEach(c=> c.disabled = true);
-}
 
 cells.forEach(cell=>{
 	cell.addEventListener('click', ()=>{
@@ -113,6 +103,7 @@ cells.forEach(cell=>{
 });
 btnReset.addEventListener('click', init);
 init();
+
 
 
 
