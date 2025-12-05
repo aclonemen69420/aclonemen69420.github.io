@@ -8,104 +8,82 @@ const scoreOEl = document.getElementById('score-o');
 const scoreDrawEl = document.getElementById('score-draw');
 
 const WIN_LINES = [
-[0,1,2],[3,4,5],[6,7,8], 
-[0,3,6],[1,4,7],[2,5,8], 
-[0,4,8],[2,4,6] 
+    [0, 1, 2], [3, 4, 5], [6, 7, 8], 
+    [0, 3, 6], [1, 4, 7], [2, 5, 8], 
+    [0, 4, 8], [2, 4, 6]
 ];
-let board; 
-let current; 
-let active; 
+
+let board;
+let current;
+let active;
 let scoreX = 0;
 let scoreO = 0;
 let scoreDraw = 0;
-/**
-* 遊戲結束，處理勝利或平手
-* @param {object} param0 - {winner, line}
-*/
 
-
-function endGame({winner, line}){
-active = false;
-if(winner){
-stateEl.textContent = `${winner} 勝利！`;
-line.forEach(i=> cells[i].classList.add('win'));
-if(winner==='X') scoreX++; else scoreO++;
-}else{
-stateEl.textContent = '平手';
-scoreDraw++;
-}
-updateScoreboard();
-cells.forEach(c=> c.disabled = true);
+function endGame({ winner, line }) {
+    active = false;
+    if (winner) {
+        stateEl.textContent = `${winner} 勝利！`;
+        line.forEach(i => cells[i].classList.add('win'));
+        if (winner === 'X') scoreX++;
+        else scoreO++;
+    } else {
+        stateEl.textContent = '平手';
+        scoreDraw++;
+    }
+    updateScoreboard();
+    cells.forEach(c => c.disabled = true);
 }
 
-function updateScoreboard(){
-scoreXEl.textContent = scoreX;
-scoreOEl.textContent = scoreO;
-scoreDrawEl.textContent = scoreDraw;
+function updateScoreboard() {
+    scoreXEl.textContent = scoreX;
+    scoreOEl.textContent = scoreO;
+    scoreDrawEl.textContent = scoreDraw;
 }
+
 btnReset.addEventListener('click', init);
 
-btnResetAll.addEventListener('click', ()=>{
-scoreX = scoreO = scoreDraw = 0;
-updateScoreboard();
-init();
-});
-
-function init(){
-	board = Array(9).fill('');
-	current = 'X';
-	active = true;
-	cells.forEach(c=>{
-		c.textContent = '';
-		c.className = 'cell';
-		c.disabled = false;
-	});
-	turnEl.textContent = current;
-	stateEl.textContent = '';
+const btnResetAll = document.getElementById('reset-all');
+if (btnResetAll) {
+    btnResetAll.addEventListener('click', () => {
+        scoreX = scoreO = scoreDraw = 0;
+        updateScoreboard();
+        init();
+    });
 }
 
-function place(idx){
-	if(!active || board[idx]) return;
-	board[idx] = current;
-	const cell = cells[idx];
-	cell.textContent = current;
-	cell.classList.add(current.toLowerCase());
-	const result = evaluate();
-	if(result.finished){
-		endGame(result);
-	}else{
-		switchTurn();
-	}
+function init() {
+    board = Array(9).fill('');
+    current = 'X';
+    active = true;
+    cells.forEach(c => {
+        c.textContent = '';
+        c.className = 'cell';
+        c.disabled = false;
+    });
+    turnEl.textContent = current;
+    stateEl.textContent = '';
 }
 
-function switchTurn(){
-	current = current==='X' ? 'O' : 'X';
-	turnEl.textContent = current;
+function place(idx) {
+    if (!active || board[idx]) return;
+    board[idx] = current;
+    const cell = cells[idx];
+    cell.textContent = current;
+    cell.classList.add(current.toLowerCase());
+    const result = evaluate();
+    if (result.finished) {
+        endGame(result);
+    } else {
+        switchTurn();
+    }
 }
 
-function evaluate(){
-	for(const line of WIN_LINES){
-		const [a,b,c] = line;
-		if(board[a] && board[a]===board[b] && board[a]===board[c]){
-			return { finished:true, winner:board[a], line };
-		}
-	}
-	if(board.every(v=>v)) return { finished:true, winner:null };
-		return { finished:false };
+function switchTurn() {
+    current = current === 'X' ? 'O' : 'X';
+    turnEl.textContent = current;
 }
 
-
-cells.forEach(cell=>{
-	cell.addEventListener('click', ()=>{
-		const idx = +cell.getAttribute('data-idx');
-		place(idx);
-	});
-});
-btnReset.addEventListener('click', init);
-init();
-
-
-
-
-
-
+function evaluate() {
+    for (const line of WIN_LINES) {
+        const [a,
