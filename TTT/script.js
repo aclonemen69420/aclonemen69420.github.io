@@ -86,4 +86,20 @@ function switchTurn() {
 
 function evaluate() {
     for (const line of WIN_LINES) {
-        const [a,
+        const [a, b, c] = line;
+        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+            return { finished: true, winner: board[a], line };
+        }
+    }
+    if (board.every(v => v)) return { finished: true, winner: null };
+    return { finished: false };
+}
+
+cells.forEach(cell => {
+    cell.addEventListener('click', () => {
+        const idx = +cell.getAttribute('data-idx');
+        place(idx);
+    });
+});
+
+init();
