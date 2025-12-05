@@ -16,9 +16,18 @@
 <section id=“board” class=“board” aria-label=“井字棋棋盤”>
  <!-- 棋盤容器 (9 格) -->
 </section>
- <div class="controls">
- <button id="reset">重開一局</button>
- </div>
+ <!-- 計分板 -->
+<div class=“scoreboard”>
+<h2>計分板</h2>
+<p>X 勝場：<span id=“score-x”>0</span></p>
+<p>O 勝場：<span id=“score-o”>0</span></p>
+<p>平手次數：<span id=“score-draw”>0</span></p>
+</div>
+<!-- 控制按鈕 -->
+<div class=“controls”>
+<button id=“reset”>重開一局</button>
+<button id="reset-all">重置計分</button>
+</div>
 </main>
  <script src="script.js" defer></script>
  </body>
@@ -38,6 +47,7 @@
  <button id="reset">重開一局</button>
  </div>
  </section>
+
 
 
 
