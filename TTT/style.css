@@ -31,8 +31,16 @@ cursor:pointer; user-select:none; -webkit-tap-highlight-color:transparent;
 .cell.o{ color:var(--o); }
 .cell.win{ background:var(--win); color:#000; }
 
+.scoreboard{ margin-top:16px; text-align:left; display:inline-block; }
+.scoreboard h2{ margin-bottom:8px; font-size:18px; }
+.controls{ margin-top:12px; }
+button{ padding:8px 12px; border-radius:10px; border:0;
+background:#21264a; color:var(--text); cursor:pointer; }
+button:disabled{ opacity:.5; cursor:not-allowed; }
+
 .controls{ margin-top:12px; }
 button{ padding:8px 12px; border-radius:10px; border:0; background:#21264a; color:var(--text);
 cursor:pointer; }
 button:disabled{ opacity:.5; cursor:not-allowed; }
+
 
