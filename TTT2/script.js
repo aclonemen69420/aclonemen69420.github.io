@@ -16,7 +16,7 @@ function init() {
     board = Array(9).fill(null);
     active = true;
     current = 'X';
-    document.getElementById('status').innerText = '玩家 (X) 先手';
+    document.getElementById('status').innerText = 'Player (X) first';
 
     for (let i = 0; i < 9; i++) {
         const cell = document.createElement('div');
@@ -36,22 +36,20 @@ function playerMove(i) {
     updateBoard();
 
     if (checkWin('X')) {
-        endGame('玩家 (X) 勝利！ ??');
+        endGame('Player (X) Wins!');
         return;
     } else if (isFull()) {
-        endGame('平手！ ??');
+        endGame('Draw!');
         return;
     }
 
     current = 'O';
-    document.getElementById('status').innerText = '電腦思考中...';
+    document.getElementById('status').innerText = 'Computer thinking...';
 
     setTimeout(computerMove, 700);
 }
 
-/**
- * 處理電腦 (O) 的移動。
- */
+
 function computerMove() {
     let move = findWinningMove('O');
     
@@ -60,7 +58,7 @@ function computerMove() {
     if (move === null) move = getRandomMove();
 
     if (move === null) {
-        if (isFull()) endGame('平手！ ??');
+        if (isFull()) endGame('Draw!');
         return;
     }
 
@@ -68,15 +66,15 @@ function computerMove() {
     updateBoard();
 
     if (checkWin('O')) {
-        endGame('電腦 (O) 勝利！ ??');
+        endGame('Computer (O) Wins!');
         return;
     } else if (isFull()) {
-        endGame('平手！ ??');
+        endGame('Draw!');
         return;
     }
 
     current = 'X';
-    document.getElementById('status').innerText = '輪到玩家 (X)';
+    document.getElementById('status').innerText = 'Player turn (X)';
 }
 
 
