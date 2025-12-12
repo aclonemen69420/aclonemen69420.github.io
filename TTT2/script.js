@@ -108,7 +108,6 @@ function updateBoard() {
     const cells = document.getElementsByClassName('cell');
     for (let i = 0; i < 9; i++) {
         cells[i].innerText = board[i] || '';
-        
         cells[i].classList.remove('x-cell', 'o-cell');
         if (board[i] === 'X') {
             cells[i].classList.add('x-cell');

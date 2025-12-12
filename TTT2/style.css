@@ -1,32 +1,108 @@
-body{
-	font-family: sans-serif;
-	text-align: center;
-	background-color: #f2f2f2;
+/* --- 基礎設定與字體 --- */
+body {
+    /* 確保繁體中文顯示正常 */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", sans-serif;
+    text-align: center;
+    background-color: #f0f4f8; /* 柔和的淺藍灰色背景 */
+    color: #333;
+    padding: 30px 10px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
 }
-h1{
-	color:#333;
+
+h1 {
+    color: #1e3a8a; /* 深藍色標題 */
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    font-weight: 800;
 }
-.board{
-	width: 300px;
-	height: 300px;
-	margin: 20px auto;
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 5px;
+
+/* --- 狀態訊息區 --- */
+#status {
+    font-size: 1.3em;
+    font-weight: 600;
+    margin-bottom: 30px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: #e0f7fa; /* 淺青色背景 */
+    color: #00796b; /* 深青色文字 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+/* --- 遊戲棋盤區 --- */
+.board {
+    width: 330px; /* 略微加大板面 */
+    height: 330px;
+    margin: 0 auto 30px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px; /* 增加格子間距 */
+    background-color: #ffffff;
+    border-radius: 15px; /* 圓角邊框 */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* 更明顯的陰影 */
+    padding: 10px;
+}
+
+/* --- 格子 (Cell) 樣式 --- */
 .cell {
-	background-color: white;
-	border: 2px solid #888;
-	font-size: 2em;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	cursor: pointer;
-	transition: background-color 0.3s;
+    background-color: #f9f9f9; /* 輕微的灰色背景 */
+    border: none; /* 移除傳統邊框 */
+    font-size: 4em; /* 增大符號尺寸 */
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.2s ease-out, transform 0.1s;
+    line-height: 1; /* 確保符號垂直居中 */
 }
+
+/* 滑鼠懸停效果：只對空位有意義 */
 .cell:hover {
- background-color: #e0e0e0;
- }
- .controls {
- margin-top: 10px;
- }
+    background-color: #e3f2fd; /* 淺藍色懸停 */
+    transform: translateY(-2px); /* 輕微上浮 */
+}
+
+/* 玩家 X 的樣式 */
+.cell.x-cell {
+    color: #ef4444; /* 醒目的紅色 */
+    /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); */
+}
+
+/* 電腦 O 的樣式 */
+.cell.o-cell {
+    color: #10b981; /* 醒目的綠色 */
+    /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); */
+}
+
+/* --- 控制區與按鈕 --- */
+.controls {
+    margin-top: 20px;
+}
+
+button {
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: white;
+    background-color: #4f46e5; /* 漂亮的紫色/靛色 */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+button:hover {
+    background-color: #3730a3; /* 滑鼠懸停變深 */
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(0); /* 按下時歸位 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
